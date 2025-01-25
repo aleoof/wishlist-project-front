@@ -8,6 +8,7 @@
 div {
   display: flex;
   padding: 0 8vw;
-  width: 100%;
+  max-width: 1350px;
+  flex-grow: 1;
 }
 </style>

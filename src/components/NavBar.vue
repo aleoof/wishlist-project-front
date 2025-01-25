@@ -20,10 +20,13 @@ import PageContainer from './PageContainer.vue'
 nav {
   background-color: var(--primary);
   padding: 2em 0;
+  display: flex;
+  justify-content: center;
 }
 .navbar {
-  width: 100%;
   display: flex;
+  flex: 1;
+  flex-grow: 1;
   justify-content: space-between;
 }
 
