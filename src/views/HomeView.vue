@@ -62,6 +62,6 @@ onMounted(() => {
   flex-wrap: wrap;
   gap: 2.5em;
   max-width: 1048px;
-  align-self: center;
+  align-self: flex-start;
 }
 </style>
