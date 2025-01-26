@@ -9,9 +9,7 @@ const products = ref([])
 const fetchData = async () => {
   try {
     const response = await API.get('/products')
-    // console.log(response.data)
     products.value = response.data.products
-    console.log(products)
   } catch (error) {
     console.error(error)
   }
@@ -28,7 +26,16 @@ onMounted(() => {
       <div class="content">
         <div class="breadcrumb">Home</div>
         <div class="list-items">
-          <ProductCard v-for="product of products" :key="product.code" />
+          <ProductCard
+            v-for="product of products"
+            :key="product.code"
+            :title="product.details.name"
+            :rating="product.rating"
+            :originalPrice="product.fullPriceInCents"
+            :price="product.salePriceInCents"
+            :image="product.image"
+            :id="product.code"
+          />
         </div>
       </div>
     </PageContainer>

@@ -2,26 +2,55 @@
 import LikeProduct from '@/assets/svg/LikeProduct.vue'
 import RatingStars from './RatingStars.vue'
 
+import { useProductStore } from '@/stores/wishlist'
+
 defineProps<{
+  id?: string
   title?: string
   rating?: number
-  originarPrice?: string
+  originalPrice?: string
   price?: string
+  image?: string
 }>()
+
+const { wishlist, removeFromList, addToList } = useProductStore()
+
+const priceToBRL = (value) => {
+  return (parseInt(value) / 100).toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  })
+}
+
+const addToWishlist = (value) => {
+  console.log(wishlist?.some((item) => item === value))
+  if (wishlist?.some((item) => item === value)) {
+    removeFromList(value)
+  } else {
+    addToList(value)
+  }
+  localStorage.setItem('wishlist', wishlist)
+}
 </script>
 
 <template>
   <div class="card">
-    <div class="image">
-      <div class="add-wish">
+    <div class="image" :style="{ backgroundImage: 'url(' + image + ')' }">
+      <div
+        class="add-wish"
+        @click="addToWishlist(id)"
+        :style="{ backgroundColor: wishlist?.some((item) => item === id) ? 'red' : 'var(--grey)' }"
+      >
         <LikeProduct />
       </div>
     </div>
     <div class="content">
-      <h4 class="title">Title title title title asuidiasdij disjijsd</h4>
-      <div class="rating"><RatingStars /> 5.0</div>
-      <p class="original-price">R$123.12</p>
-      <p class="price">R$123.12</p>
+      <h4 class="title">{{ title }}</h4>
+      <div class="rating"><RatingStars /> {{ rating }}</div>
+      <p class="original-price">
+        {{ priceToBRL(originalPrice) }}
+      </p>
+      <p class="price">{{ priceToBRL(price) }}</p>
     </div>
   </div>
 </template>
@@ -38,8 +67,9 @@ defineProps<{
 .image {
   height: 50%;
   width: 100%;
-  background-image: url(https://placehold.co/200x150);
   background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 .content {
   width: 100%;
@@ -52,6 +82,10 @@ defineProps<{
 .title {
   font-size: 16px;
   line-height: 1.2;
+  text-overflow: ellipsis;
+  height: 2.5em;
+  box-orient: vertical;
+  overflow: hidden;
 }
 
 .original-price {
@@ -78,6 +112,10 @@ defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.add-wish:hover {
+  background-color: red;
 }
 
 .rating {
