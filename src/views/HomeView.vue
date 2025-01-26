@@ -1,6 +1,25 @@
 <script setup lang="ts">
 import PageContainer from '@/components/PageContainer.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import { API } from '../api/api.js'
+import { ref, onMounted } from 'vue'
+
+const products = ref([])
+
+const fetchData = async () => {
+  try {
+    const response = await API.get('/products')
+    // console.log(response.data)
+    products.value = response.data.products
+    console.log(products)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+onMounted(() => {
+  fetchData()
+})
 </script>
 
 <template>
@@ -9,13 +28,7 @@ import ProductCard from '@/components/ProductCard.vue'
       <div class="content">
         <div class="breadcrumb">Home</div>
         <div class="list-items">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard v-for="product of products" :key="product.code" />
         </div>
       </div>
     </PageContainer>
