@@ -16,7 +16,6 @@ const fetchData = async () => {
     products.value = products.value.filter((product) =>
       wishlist.some((wish) => product.code === wish),
     )
-    console.log(products.value)
   } catch (error) {
     console.error(error)
   }
