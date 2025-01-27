@@ -46,7 +46,7 @@ const addToWishlist = (value) => {
     </div>
     <div class="content">
       <h4 class="title">{{ title }}</h4>
-      <div class="rating"><RatingStars /> {{ rating }}</div>
+      <div class="rating"><RatingStars :rating="rating" /> {{ rating }}</div>
       <p class="original-price">
         {{ priceToBRL(originalPrice) }}
       </p>
