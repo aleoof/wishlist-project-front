@@ -8,12 +8,10 @@ export const useProductStore = defineStore('wishlist', () => {
 
   function addToList(id: string) {
     wishlist?.value?.push(id)
-    console.log(wishlist.value)
   }
 
   function removeFromList(id: string) {
     wishlist?.value?.splice(wishlist.value.indexOf(id), 1)
-    console.log(wishlist.value)
   }
 
   return { wishlist, addToList, removeFromList }

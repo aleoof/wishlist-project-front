@@ -3,6 +3,7 @@ import NetshoesLogo from '@/assets/svg/NetshoesLogo.vue'
 import WishlistIcon from '@/assets/svg/WishlistIcon.vue'
 import { RouterLink } from 'vue-router'
 import PageContainer from './PageContainer.vue'
+import ProfileButton from '@/components/ProfileButton.vue'
 </script>
 
 <template>
@@ -10,7 +11,10 @@ import PageContainer from './PageContainer.vue'
     <PageContainer>
       <div class="navbar">
         <RouterLink to="/"><NetshoesLogo /></RouterLink>
-        <RouterLink to="/wishlist"><WishlistIcon />Wishlist</RouterLink>
+        <span>
+          <RouterLink to="/wishlist"><WishlistIcon />Wishlist</RouterLink>
+          <ProfileButton />
+        </span>
       </div>
     </PageContainer>
   </nav>
@@ -38,5 +42,11 @@ a {
   font-weight: 600;
   color: var(--white);
   font-size: 14px;
+}
+
+span {
+  display: flex;
+  gap: 5em;
+  align-items: center;
 }
 </style>

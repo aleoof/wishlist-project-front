@@ -52,7 +52,7 @@ const addToWishlist = (value) => {
       >
         <LikeProduct />
       </button>
-      <button type="button" class="remove-wish" v-else @click="removeFromList(value)">
+      <button type="button" class="remove-wish" v-else @click="removeFromList(id)">
         <CloseIcon />
       </button>
     </div>

@@ -24,8 +24,9 @@ const fetchData = async () => {
 
 watch(wishlist, () => {
   products.value = products.value.filter((product) =>
-    wishlist.some((wish) => product.code === wish),
+    wishlist.some((wish) => wish === product.code),
   )
+  localStorage.setItem('wishlist', wishlist)
 })
 
 onMounted(() => {
