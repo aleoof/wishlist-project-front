@@ -14,6 +14,10 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 
 See [Vite Configuration Reference](https://vite.dev/config/).
 
+## Before starting the project please download and run the project API
+
+Se [API Wishlist](https://github.com/aleoof/wishlist-project-back/tree/main)
+
 ## Project Setup
 
 ```sh
