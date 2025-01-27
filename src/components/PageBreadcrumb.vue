@@ -6,7 +6,6 @@ import { RouterLink } from 'vue-router'
 const route = useRoute()
 
 const breadcrumbs = computed(() => route.meta.breadcrumb)
-console.log(breadcrumbs.value)
 </script>
 
 <template>
