@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PageContainer from '@/components/PageContainer.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import PageBreadcrumb from '@/components/PageBreadcrumb.vue'
 import { API } from '../api/api.js'
 import { ref, onMounted } from 'vue'
 
@@ -24,7 +25,7 @@ onMounted(() => {
   <main>
     <PageContainer>
       <div class="content">
-        <div class="breadcrumb">Home</div>
+        <PageBreadcrumb />
         <div class="list-items">
           <ProductCard
             v-for="product of products"
@@ -43,13 +44,6 @@ onMounted(() => {
 </template>
 
 <style lang="css" scoped>
-.breadcrumb {
-  border-bottom: 1px solid var(--grey);
-  width: 100%;
-  padding: 1.5em 0;
-  font-weight: 600;
-  color: var(--primary);
-}
 .content {
   display: flex;
   flex-direction: column;

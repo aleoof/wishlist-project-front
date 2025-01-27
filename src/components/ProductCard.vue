@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import LikeProduct from '@/assets/svg/LikeProduct.vue'
+import CloseIcon from '@/assets/svg/CloseIcon.vue'
 import RatingStars from './RatingStars.vue'
 
 import { useProductStore } from '@/stores/wishlist'
+
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
 defineProps<{
   id?: string
@@ -12,6 +16,10 @@ defineProps<{
   price?: string
   image?: string
 }>()
+
+const route = useRoute()
+
+const path = computed(() => route.name)
 
 const { wishlist, removeFromList, addToList } = useProductStore()
 
@@ -23,7 +31,6 @@ const priceToBRL = (value) => {
 }
 
 const addToWishlist = (value) => {
-  console.log(wishlist?.some((item) => item === value))
   if (wishlist?.some((item) => item === value)) {
     removeFromList(value)
   } else {
@@ -36,13 +43,18 @@ const addToWishlist = (value) => {
 <template>
   <div class="card">
     <div class="image" :style="{ backgroundImage: 'url(' + image + ')' }">
-      <div
+      <button
+        type="button"
+        v-if="path !== 'wishlist'"
         class="add-wish"
         @click="addToWishlist(id)"
         :style="{ backgroundColor: wishlist?.some((item) => item === id) ? 'red' : 'var(--grey)' }"
       >
         <LikeProduct />
-      </div>
+      </button>
+      <button type="button" class="remove-wish" v-else @click="removeFromList(value)">
+        <CloseIcon />
+      </button>
     </div>
     <div class="content">
       <h4 class="title">{{ title }}</h4>
@@ -112,6 +124,22 @@ const addToWishlist = (value) => {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  padding: 5px;
+}
+
+.remove-wish {
+  position: absolute;
+  right: 1em;
+  top: 0.5em;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
 }
 
 .add-wish:hover {
