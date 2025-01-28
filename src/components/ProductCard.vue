@@ -6,21 +6,22 @@ import RatingStars from './RatingStars.vue'
 import { useProductStore } from '@/stores/wishlist'
 
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   id?: string
   title?: string
   rating?: number
   originalPrice?: string
   price?: string
   image?: string
+  available?: boolean
 }>()
 
 const route = useRoute()
 
 const path = computed(() => route.name)
-
+const setTheme = ref(props.available ? 'none' : 'grayscale(80%)')
 const { wishlist, removeFromList, addToList } = useProductStore()
 
 const priceToBRL = (value) => {
@@ -45,24 +46,29 @@ const addToWishlist = (value) => {
     <div class="image" :style="{ backgroundImage: 'url(' + image + ')' }">
       <button
         type="button"
-        v-if="path !== 'wishlist'"
+        v-if="path !== 'wishlist' && available"
         class="add-wish"
         @click="addToWishlist(id)"
         :style="{ backgroundColor: wishlist?.some((item) => item === id) ? 'red' : 'var(--grey)' }"
       >
         <LikeProduct />
       </button>
-      <button type="button" class="remove-wish" v-else @click="removeFromList(id)">
+      <button
+        type="button"
+        class="remove-wish"
+        v-else-if="path === 'wishlist'"
+        @click="removeFromList(id)"
+      >
         <CloseIcon />
       </button>
     </div>
     <div class="content">
       <h4 class="title">{{ title }}</h4>
       <div class="rating"><RatingStars :rating="rating" /> {{ rating }}</div>
-      <p class="original-price">
+      <p v-if="available" class="original-price">
         {{ priceToBRL(originalPrice) }}
       </p>
-      <p class="price">{{ priceToBRL(price) }}</p>
+      <p class="price">{{ available ? priceToBRL(price) : 'Produto indisponível' }}</p>
     </div>
   </div>
 </template>
@@ -82,6 +88,7 @@ const addToWishlist = (value) => {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  filter: v-bind(setTheme);
 }
 .content {
   width: 100%;
@@ -126,6 +133,7 @@ const addToWishlist = (value) => {
   justify-content: center;
   border: none;
   padding: 5px;
+  filter: none;
 }
 
 .remove-wish {
@@ -140,6 +148,7 @@ const addToWishlist = (value) => {
   justify-content: center;
   border: none;
   background-color: transparent;
+  z-index: 2;
 }
 
 .add-wish:hover {

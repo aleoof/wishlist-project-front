@@ -28,7 +28,7 @@ onMounted(() => {
         <PageBreadcrumb />
         <div class="list-items">
           <ProductCard
-            v-for="product of products.filter((prod) => prod.available)"
+            v-for="product of products.filter((prod) => prod.visible)"
             :key="product.code"
             :title="product.details.name"
             :rating="product.rating"
@@ -36,6 +36,7 @@ onMounted(() => {
             :price="product.salePriceInCents"
             :image="product.image"
             :id="product.code"
+            :available="product.available"
           />
         </div>
       </div>

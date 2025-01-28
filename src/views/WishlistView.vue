@@ -48,6 +48,7 @@ onMounted(() => {
             :price="product.salePriceInCents"
             :image="product.image"
             :id="product.code"
+            :available="product.available"
           />
         </div>
       </div>
